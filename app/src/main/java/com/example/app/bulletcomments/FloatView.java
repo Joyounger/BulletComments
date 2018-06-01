@@ -64,10 +64,12 @@ public class FloatView {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mFloatBallParams.dimAmount = 0.2f;
 
-      mFloatBallParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+        mFloatBallParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
 
-        mFloatBallParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        mFloatBallParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        // 设置悬浮窗口长宽数据
+        DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
+        mFloatBallParams.height = WindowManager.LayoutParams.WRAP_CONTENT; //490
+        mFloatBallParams.width = dm.widthPixels; //WindowManager.LayoutParams.WRAP_CONTENT;
 
         mFloatBallParams.gravity = Gravity.LEFT | Gravity.TOP;
         mFloatBallParams.format = PixelFormat.RGBA_8888;
@@ -197,6 +199,7 @@ public class FloatView {
         danmaku.padding = 5;
         danmaku.textSize = sp2px(20);
         danmaku.textColor = Color.RED;
+        //danmaku.time = mDanmakuView.getCurrentTime() + 1200; //显示时间
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;
         }
