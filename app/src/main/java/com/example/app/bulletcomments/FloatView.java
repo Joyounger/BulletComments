@@ -30,17 +30,25 @@ public class FloatView {
      * 窗口布局参数
      */
     private WindowManager.LayoutParams mFloatBallParams;
-
     private ImageView mImageView;
-
     private WindowManager mWindowManager;
-
     private Context mContext;
-
     public FloatView(Context context) {
         mContext = context;
         initFloatBallParams(mContext);
     }
+
+    public  int viewtype;
+    private DanmakuContext danmakuContext;
+    private boolean showDanmaku;
+    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+        @Override
+        protected IDanmakus parse() {
+            return new Danmakus();
+        }
+    };
+
+    private DanmakuView mDanmakuView;
 
     /**
      * 获取悬浮球的布局参数
@@ -53,7 +61,7 @@ public class FloatView {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mFloatBallParams.dimAmount = 0.2f;
 
-//      mFloatBallParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+      mFloatBallParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
 
         mFloatBallParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mFloatBallParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -97,11 +105,85 @@ public class FloatView {
         mFloatBallParams.y = y;
     }
 
+    public void createDanmakuView(int viewtype, int x, int y) {
+        this.viewtype = viewtype;
+        danmakuContext = DanmakuContext.create();
+        if (viewtype == 1) {
+            mDanmakuView = new DanmakuView(mContext);
+            mDanmakuView.enableDanmakuDrawingCache(true);
+            mDanmakuView.setCallback(new DrawHandler.Callback() {
+                @Override
+                public void prepared() {
+                    showDanmaku = true;
+                    mDanmakuView.start();
+                    generateSomeDanmaku();
+                }
+                @Override
+                public void updateTimer(DanmakuTimer timer) {  }
+                @Override
+                public void danmakuShown(BaseDanmaku danmaku) {  }
+                @Override
+                public void drawingFinished() {  }
+            });
+            mDanmakuView.prepare(parser, danmakuContext);
+        }
+        mFloatBallParams.x = x;
+        mFloatBallParams.y = y;
+    }
+
+    /**
+     * 随机生成一些弹幕内容以供测试
+     */
+    private void generateSomeDanmaku() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(showDanmaku) {
+                    int time = new Random().nextInt(1000);
+                    String content = "" + time + time;
+                    addDanmaku(content, false);
+                    try {
+                        Thread.sleep(time);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private void addDanmaku(String content, boolean withBorder) {
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        danmaku.text = content;
+        danmaku.padding = 5;
+        danmaku.textSize = sp2px(20);
+        danmaku.textColor = Color.RED;
+        if (withBorder) {
+            danmaku.borderColor = Color.GREEN;
+        }
+
+        if (this.viewtype == 1) {
+            danmaku.setTime(mDanmakuView.getCurrentTime());
+            mDanmakuView.addDanmaku(danmaku);
+        }
+    }
+
+    public int sp2px(float spValue) {
+        final float fontScale = mContext.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
     /**
      * 添加图片
      */
     public void addImageView() {
         mWindowManager.addView(mImageView, mFloatBallParams);
+    }
+
+    public void addDanmakuView() {
+        if(mDanmakuView.getParent()==null) {
+            mWindowManager.addView(mDanmakuView, mFloatBallParams);
+        }
     }
 
     /**
@@ -118,6 +200,7 @@ public class FloatView {
      */
     public void setOnClickListener(View.OnClickListener listener) {
         mImageView.setOnClickListener(listener);
+        mDanmakuView.setOnClickListener(listener);
     }
 
     /**
@@ -129,10 +212,15 @@ public class FloatView {
         return mImageView;
     }
 
+    public DanmakuView getDanmakuView() {
+        return mDanmakuView;
+    }
+
     /**
      * 更新
      */
     public void updateWindowManager() {
         mWindowManager.updateViewLayout(mImageView, mFloatBallParams);
+        mWindowManager.updateViewLayout(mDanmakuView, mFloatBallParams);
     }
 }

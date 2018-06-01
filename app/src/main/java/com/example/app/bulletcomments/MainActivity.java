@@ -9,5 +9,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FloatView mFloatView;
+        mFloatView = new FloatView(getApplicationContext());
+        int floatHeight = mFloatView.getStatusBarHeight();
+        mFloatView.createDanmakuView(1,0, floatHeight);
+        mFloatView.addDanmakuView();
     }
 }
