@@ -38,7 +38,8 @@ public class FloatView {
         initFloatBallParams(mContext);
     }
 
-    public  int viewtype;
+    public int viewtype;
+    public int flashtime;
     private DanmakuContext danmakuContext;
     private boolean showDanmaku;
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
@@ -177,11 +178,11 @@ public class FloatView {
             @Override
             public void run() {
                 while(showDanmaku) {
-                    int time = new Random().nextInt(1000);
+                    int time = new Random().nextInt(300);
                     String content = "" + time + time;
                     addDanmaku(content, false);
                     try {
-                        Thread.sleep(time);
+                        Thread.sleep(flashtime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
