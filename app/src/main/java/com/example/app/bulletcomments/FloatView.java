@@ -49,6 +49,8 @@ public class FloatView {
     };
 
     private DanmakuView mDanmakuView;
+    private DanmakuSurfaceView mDanmakuSurfaceView;
+    private DanmakuTextureView mDanmakuTextureView;
 
     /**
      * 获取悬浮球的布局参数
@@ -126,6 +128,42 @@ public class FloatView {
                 public void drawingFinished() {  }
             });
             mDanmakuView.prepare(parser, danmakuContext);
+        } else if (viewtype == 2) {
+            mDanmakuSurfaceView = new DanmakuSurfaceView(mContext);
+            mDanmakuSurfaceView.enableDanmakuDrawingCache(true);
+            mDanmakuSurfaceView.setCallback(new DrawHandler.Callback() {
+                @Override
+                public void prepared() {
+                    showDanmaku = true;
+                    mDanmakuSurfaceView.start();
+                    generateSomeDanmaku();
+                }
+                @Override
+                public void updateTimer(DanmakuTimer timer) {  }
+                @Override
+                public void danmakuShown(BaseDanmaku danmaku) {  }
+                @Override
+                public void drawingFinished() {  }
+            });
+            mDanmakuSurfaceView.prepare(parser, danmakuContext);
+        } else if (viewtype == 3) {
+            mDanmakuTextureView = new DanmakuTextureView(mContext);
+            mDanmakuTextureView.enableDanmakuDrawingCache(true);
+            mDanmakuTextureView.setCallback(new DrawHandler.Callback() {
+                @Override
+                public void prepared() {
+                    showDanmaku = true;
+                    mDanmakuTextureView.start();
+                    generateSomeDanmaku();
+                }
+                @Override
+                public void updateTimer(DanmakuTimer timer) {  }
+                @Override
+                public void danmakuShown(BaseDanmaku danmaku) {  }
+                @Override
+                public void drawingFinished() {  }
+            });
+            mDanmakuTextureView.prepare(parser, danmakuContext);
         }
         mFloatBallParams.x = x;
         mFloatBallParams.y = y;
@@ -165,6 +203,12 @@ public class FloatView {
         if (this.viewtype == 1) {
             danmaku.setTime(mDanmakuView.getCurrentTime());
             mDanmakuView.addDanmaku(danmaku);
+        } else if (this.viewtype == 2) {
+            danmaku.setTime(mDanmakuSurfaceView.getCurrentTime());
+            mDanmakuSurfaceView.addDanmaku(danmaku);
+        } else if (this.viewtype == 3) {
+            danmaku.setTime(mDanmakuTextureView.getCurrentTime());
+            mDanmakuTextureView.addDanmaku(danmaku);
         }
     }
 
@@ -186,6 +230,18 @@ public class FloatView {
         }
     }
 
+    public void addDanmakuSurfaceView() {
+        if(mDanmakuSurfaceView.getParent()==null) {
+            mWindowManager.addView(mDanmakuSurfaceView, mFloatBallParams);
+        }
+    }
+
+    public void addDanmakuTextureView() {
+        if(mDanmakuTextureView.getParent()==null) {
+            mWindowManager.addView(mDanmakuTextureView, mFloatBallParams);
+        }
+    }
+
     /**
      * 隐藏图片
      */
@@ -201,6 +257,8 @@ public class FloatView {
     public void setOnClickListener(View.OnClickListener listener) {
         mImageView.setOnClickListener(listener);
         mDanmakuView.setOnClickListener(listener);
+        mDanmakuSurfaceView.setOnClickListener(listener);
+        mDanmakuTextureView.setOnClickListener(listener);
     }
 
     /**
@@ -216,11 +274,21 @@ public class FloatView {
         return mDanmakuView;
     }
 
+    public DanmakuSurfaceView getDanmakuSurfaceView() {
+        return mDanmakuSurfaceView;
+    }
+
+    public DanmakuTextureView getDanmakuTextureView() {
+        return mDanmakuTextureView;
+    }
+
     /**
      * 更新
      */
     public void updateWindowManager() {
         mWindowManager.updateViewLayout(mImageView, mFloatBallParams);
         mWindowManager.updateViewLayout(mDanmakuView, mFloatBallParams);
+        mWindowManager.updateViewLayout(mDanmakuSurfaceView, mFloatBallParams);
+        mWindowManager.updateViewLayout(mDanmakuTextureView, mFloatBallParams);
     }
 }
