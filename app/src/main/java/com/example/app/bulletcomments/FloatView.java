@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ import master.flame.danmaku.ui.widget.DanmakuView;
 import master.flame.danmaku.ui.widget.FakeDanmakuView;
 
 public class FloatView {
+    public final String TAG = "LYDBG";
     /**
      * 窗口布局参数
      */
@@ -40,6 +42,7 @@ public class FloatView {
 
     public int viewtype;
     public int flashtime;
+    public long showtime;
     private DanmakuContext danmakuContext;
     private boolean showDanmaku;
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
@@ -199,19 +202,28 @@ public class FloatView {
         danmaku.padding = 5;
         danmaku.textSize = sp2px(20);
         danmaku.textColor = Color.RED;
+        danmaku.setTime(showtime);
         //danmaku.time = mDanmakuView.getCurrentTime() + 1200; //显示时间
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;
         }
 
         if (this.viewtype == 1) {
-            danmaku.setTime(mDanmakuView.getCurrentTime());
+            Log.e(TAG, "mDanmakuView.getCurrentTime()--" + mDanmakuView.getCurrentTime());
+            if (showtime == 0) {
+                danmaku.setTime(mDanmakuView.getCurrentTime());
+            }
             mDanmakuView.addDanmaku(danmaku);
         } else if (this.viewtype == 2) {
-            danmaku.setTime(mDanmakuSurfaceView.getCurrentTime());
+            Log.e(TAG, "mDanmakuSurfaceView.getCurrentTime()--" + mDanmakuSurfaceView.getCurrentTime());
+            if (showtime == 0) {
+                danmaku.setTime(mDanmakuSurfaceView.getCurrentTime());
+            }
             mDanmakuSurfaceView.addDanmaku(danmaku);
         } else if (this.viewtype == 3) {
-            danmaku.setTime(mDanmakuTextureView.getCurrentTime());
+            if (showtime == 0) {
+                danmaku.setTime(mDanmakuTextureView.getCurrentTime());
+            }
             mDanmakuTextureView.addDanmaku(danmaku);
         }
     }

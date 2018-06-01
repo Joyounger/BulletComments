@@ -9,7 +9,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
-    public int time;
+    public int amount;
+    public long time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +23,28 @@ public class MainActivity extends AppCompatActivity {
         final  LinearLayout operationLayout = (LinearLayout) findViewById(R.id.operation_layout);
         final Button setFlashTime = (Button) findViewById(R.id.button0);
         final EditText editText = (EditText) findViewById(R.id.flashtime);
+        final Button setSpeed = (Button) findViewById(R.id.btn_time);
+        final EditText speedText = (EditText) findViewById(R.id.time);
 
         setFlashTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String content = editText.getText().toString();
                 if (!TextUtils.isEmpty(content)) {
-                    time = Integer.parseInt(content);
+                    amount = Integer.parseInt(content);
                 }
                 editText.setText("");
+                //addDanmaku(content, true);
+            }
+        });
+        setSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = speedText.getText().toString();
+                if (!TextUtils.isEmpty(content)) {
+                    time = Integer.parseInt(content);
+                }
+                speedText.setText("");
                 //addDanmaku(content, true);
             }
         });
@@ -39,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FloatView mFloatView;
                 mFloatView = new FloatView(getApplicationContext());
-                mFloatView.flashtime = time;
+                mFloatView.flashtime = amount;
+                mFloatView.showtime = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(1,0, floatHeight);
                 mFloatView.addDanmakuView();
@@ -49,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FloatView mFloatView;
                 mFloatView = new FloatView(getApplicationContext());
-                mFloatView.flashtime = time;
+                mFloatView.flashtime = amount;
+                mFloatView.showtime = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(2,0, floatHeight);
                 mFloatView.addDanmakuSurfaceView();
@@ -59,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FloatView mFloatView;
                 mFloatView = new FloatView(getApplicationContext());
-                mFloatView.flashtime = time;
+                mFloatView.flashtime = amount;
+                mFloatView.showtime = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(3,0, floatHeight);
                 mFloatView.addDanmakuTextureView();

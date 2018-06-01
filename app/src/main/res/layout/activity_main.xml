@@ -27,7 +27,18 @@
 
         <Button
             android:id="@+id/button0"
-            android:text="设置"
+            android:text="刷新间隔(毫秒)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_time"
+            android:text="显示时间(毫秒)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
