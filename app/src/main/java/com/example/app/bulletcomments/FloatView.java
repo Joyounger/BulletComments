@@ -43,6 +43,7 @@ public class FloatView {
     public int viewtype;
     public int flashtime;
     public long showtime;
+    public long timeOffset;
     private DanmakuContext danmakuContext;
     private boolean showDanmaku;
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
@@ -116,6 +117,7 @@ public class FloatView {
     public void createDanmakuView(int viewtype, int x, int y) {
         this.viewtype = viewtype;
         danmakuContext = DanmakuContext.create();
+        danmakuContext.setScrollSpeedFactor(1.2f);
         if (viewtype == 1) {
             mDanmakuView = new DanmakuView(mContext);
             mDanmakuView.enableDanmakuDrawingCache(true);
@@ -187,7 +189,9 @@ public class FloatView {
                     String content = "" + time + time;
                     addDanmaku(content, false);
                     try {
+                        //Thread.sleep(time);
                         Thread.sleep(flashtime);
+                        //Thread.sleep(time);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -202,7 +206,8 @@ public class FloatView {
         danmaku.padding = 5;
         danmaku.textSize = sp2px(20);
         danmaku.textColor = Color.RED;
-        danmaku.setTime(showtime);
+        //danmaku.setTime(showtime);
+        //danmaku.setTimeOffset(showtime);
         //danmaku.time = mDanmakuView.getCurrentTime() + 1200; //显示时间
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;
@@ -210,20 +215,20 @@ public class FloatView {
 
         if (this.viewtype == 1) {
             Log.e(TAG, "mDanmakuView.getCurrentTime()--" + mDanmakuView.getCurrentTime());
-            if (showtime == 0) {
+            //if (showtime == 0) {
                 danmaku.setTime(mDanmakuView.getCurrentTime());
-            }
+            //}
             mDanmakuView.addDanmaku(danmaku);
         } else if (this.viewtype == 2) {
             Log.e(TAG, "mDanmakuSurfaceView.getCurrentTime()--" + mDanmakuSurfaceView.getCurrentTime());
-            if (showtime == 0) {
+            //if (showtime == 0) {
                 danmaku.setTime(mDanmakuSurfaceView.getCurrentTime());
-            }
+            //}
             mDanmakuSurfaceView.addDanmaku(danmaku);
         } else if (this.viewtype == 3) {
-            if (showtime == 0) {
+            //if (showtime == 0) {
                 danmaku.setTime(mDanmakuTextureView.getCurrentTime());
-            }
+            //}
             mDanmakuTextureView.addDanmaku(danmaku);
         }
     }

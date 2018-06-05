@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView = new FloatView(getApplicationContext());
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
+                mFloatView.timeOffset = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(1,0, floatHeight);
                 mFloatView.addDanmakuView();
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView = new FloatView(getApplicationContext());
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
+                mFloatView.timeOffset = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(2,0, floatHeight);
                 mFloatView.addDanmakuSurfaceView();
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView = new FloatView(getApplicationContext());
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
+                mFloatView.timeOffset = time;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(3,0, floatHeight);
                 mFloatView.addDanmakuTextureView();
