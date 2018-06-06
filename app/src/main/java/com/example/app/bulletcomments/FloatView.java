@@ -44,6 +44,7 @@ public class FloatView {
     public int flashtime;
     public long showtime;
     public long timeOffset;
+    public float ScrollSpeedFactor;
     private DanmakuContext danmakuContext;
     private boolean showDanmaku;
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
@@ -117,7 +118,8 @@ public class FloatView {
     public void createDanmakuView(int viewtype, int x, int y) {
         this.viewtype = viewtype;
         danmakuContext = DanmakuContext.create();
-        danmakuContext.setScrollSpeedFactor(1.2f);
+        //danmakuContext.setScrollSpeedFactor(1.0f);
+        danmakuContext.setScrollSpeedFactor(ScrollSpeedFactor);
         if (viewtype == 1) {
             mDanmakuView = new DanmakuView(mContext);
             mDanmakuView.enableDanmakuDrawingCache(true);

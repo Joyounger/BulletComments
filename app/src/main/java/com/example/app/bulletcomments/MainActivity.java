@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 public class MainActivity extends AppCompatActivity {
     public int amount;
     public long time;
+    public float ScrollSpeedFactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String content = speedText.getText().toString();
                 if (!TextUtils.isEmpty(content)) {
-                    time = Integer.parseInt(content);
+                    //time = Integer.parseInt(content);
+                    ScrollSpeedFactor = Float.parseFloat(content);
                 }
                 speedText.setText("");
                 //addDanmaku(content, true);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
                 mFloatView.timeOffset = time;
+                mFloatView.ScrollSpeedFactor = ScrollSpeedFactor;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(1,0, floatHeight);
                 mFloatView.addDanmakuView();
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
                 mFloatView.timeOffset = time;
+                mFloatView.ScrollSpeedFactor = ScrollSpeedFactor;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(2,0, floatHeight);
                 mFloatView.addDanmakuSurfaceView();
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 mFloatView.flashtime = amount;
                 mFloatView.showtime = time;
                 mFloatView.timeOffset = time;
+                mFloatView.ScrollSpeedFactor = ScrollSpeedFactor;
                 int floatHeight = mFloatView.getStatusBarHeight();
                 mFloatView.createDanmakuView(3,0, floatHeight);
                 mFloatView.addDanmakuTextureView();
