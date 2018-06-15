@@ -16,18 +16,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     // import bilibili Android开源弹幕引擎·烈焰弹幕使
     // https://github.com/Bilibili/DanmakuFlameMaster
     compile 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     compile 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+    //compile 'com.kd.easybarrage:library:0.0.1'
+    implementation project(':EasyBarrage')
 }
