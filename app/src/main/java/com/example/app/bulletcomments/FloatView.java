@@ -118,7 +118,7 @@ public class FloatView {
     public void createDanmakuView(int viewtype, int x, int y) {
         this.viewtype = viewtype;
         danmakuContext = DanmakuContext.create();
-        //danmakuContext.setScrollSpeedFactor(1.0f);
+        //danmakuContext.setScrollSpeedFactor(1.18f);
         danmakuContext.setScrollSpeedFactor(ScrollSpeedFactor);
         if (viewtype == 1) {
             mDanmakuView = new DanmakuView(mContext);
@@ -187,8 +187,9 @@ public class FloatView {
             @Override
             public void run() {
                 while(showDanmaku) {
-                    int time = new Random().nextInt(300);
-                    String content = "" + time + time;
+                    //int time = new Random().nextInt(300);
+                    //String content = "" + time + time;
+                    String content = "1234";
                     addDanmaku(content, false);
                     try {
                         //Thread.sleep(time);
@@ -206,23 +207,23 @@ public class FloatView {
         BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         danmaku.text = content;
         danmaku.padding = 5;
-        danmaku.textSize = sp2px(20);
+        //Log.e(TAG, "sp2px(20)--" + sp2px(20));
+        danmaku.textSize = sp2px(14);
         danmaku.textColor = Color.RED;
         //danmaku.setTime(showtime);
         //danmaku.setTimeOffset(showtime);
-        //danmaku.time = mDanmakuView.getCurrentTime() + 1200; //显示时间
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;
         }
 
         if (this.viewtype == 1) {
-            Log.e(TAG, "mDanmakuView.getCurrentTime()--" + mDanmakuView.getCurrentTime());
+            //Log.e(TAG, "mDanmakuView.getCurrentTime()--" + mDanmakuView.getCurrentTime());
             //if (showtime == 0) {
                 danmaku.setTime(mDanmakuView.getCurrentTime());
             //}
             mDanmakuView.addDanmaku(danmaku);
         } else if (this.viewtype == 2) {
-            Log.e(TAG, "mDanmakuSurfaceView.getCurrentTime()--" + mDanmakuSurfaceView.getCurrentTime());
+            //Log.e(TAG, "mDanmakuSurfaceView.getCurrentTime()--" + mDanmakuSurfaceView.getCurrentTime());
             //if (showtime == 0) {
                 danmaku.setTime(mDanmakuSurfaceView.getCurrentTime());
             //}

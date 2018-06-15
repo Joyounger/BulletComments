@@ -27,7 +27,7 @@
 
         <Button
             android:id="@+id/button0"
-            android:text="每个几秒发送一个弹幕"
+            android:text="多久发一次弹幕(毫秒)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
