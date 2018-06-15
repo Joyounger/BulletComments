@@ -1,5 +1,6 @@
 package com.example.app.bulletcomments;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,7 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.kd.easybarrage.Barrage;
+import com.kd.easybarrage.BarrageView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MainActivity extends AppCompatActivity {
+    private BarrageView barrageView;
+    private List<Barrage> mBarrages = new ArrayList<>();
+
     public int amount;
     public long time;
     public float ScrollSpeedFactor;
@@ -17,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        barrageView = (BarrageView) findViewById(R.id.barrageView);
+        barrageView.setBarrages(mBarrages);
+        findViewById(R.id.sendEasyBarrage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                barrageView.addBarrage(new Barrage("111111111111", R.color.colorPrimary, Color.RED));
+            }
+        });
 
         Button BtnDanmukuView = (Button)findViewById(R.id.button1);
         Button BtnDanmukuSurfaceView = (Button)findViewById(R.id.button2);

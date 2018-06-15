@@ -41,6 +41,24 @@
             android:text="显示时间(毫秒)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/sendEasyBarrage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EasyBarrage"/>
+        <com.kd.easybarrage.BarrageView
+            android:id="@+id/barrageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/sendEasyBarrage"
+            app:allow_repeat="true"
+            app:border_color="@color/colorAccent"
+            app:line_height="20dp"
+            app:max_text_size="20"
+            app:min_text_size="14"
+            app:random_color="true"
+            app:size="200"/>
     </LinearLayout>
 
     <LinearLayout
